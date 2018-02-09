@@ -1,0 +1,7 @@
+{
+  "utterance": "Nurse",
+  "intent_type": "NurseIntent",
+  "intent": {
+    "NurseKeyword": "Nurse"
+  }
+}

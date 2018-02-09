@@ -1,0 +1,7 @@
+{
+  "utterance": "Skype",
+  "intent_type": "SkypeIntent",
+  "intent": {
+    "SkypeKeyword": "Skype"
+  }
+}

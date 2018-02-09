@@ -1,0 +1,7 @@
+{
+  "utterance": "Game",
+  "intent_type": "GameIntent",
+  "intent": {
+    "GameKeyword": "Game"
+  }
+}

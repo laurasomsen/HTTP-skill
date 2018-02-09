@@ -1,0 +1,7 @@
+{
+  "utterance": "Guide",
+  "intent_type": "GuideIntent",
+  "intent": {
+    "GuideKeyword": "Guide"
+  }
+}
