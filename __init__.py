@@ -30,7 +30,7 @@ from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 import requests
 import time
-url = "http://localhost:8080/"
+url = "http://192.168.2.167:8092"
 
 __author__ = 'laurasomsen'
 
@@ -75,6 +75,43 @@ class HTTPSkill(MycroftSkill):
         self.register_intent(nurse_intent,
                             self.handle_nurse_intent)
 
+	self.load_data_files(dirname(__file__))
+	smile_intent = IntentBuilder("SmileIntent")\
+           .require("SmileKeyword").build()
+        self.register_intent(smile_intent,
+                            self.handle_smile_intent)
+
+	self.load_data_files(dirname(__file__))
+	right_intent = IntentBuilder("RightIntent")\
+           .require("RightKeyword").build()
+        self.register_intent(right_intent,
+                            self.handle_right_intent)
+
+	self.load_data_files(dirname(__file__))
+	left_intent = IntentBuilder("LeftIntent")\
+           .require("LeftKeyword").build()
+        self.register_intent(left_intent,
+                            self.handle_left_intent)
+	
+	self.load_data_files(dirname(__file__))
+	high_five_intent = IntentBuilder("HighFiveIntent")\
+           .require("HighFiveKeyword").build()
+        self.register_intent(high_five_intent,
+                            self.handle_high_five_intent)
+
+	self.load_data_files(dirname(__file__))
+	arms_up_intent = IntentBuilder("ArmsUpIntent")\
+           .require("ArmsUpKeyword").build()
+        self.register_intent(arms_up_intent,
+                            self.handle_arms_up_intent)
+
+
+	self.load_data_files(dirname(__file__))
+	arms_down_intent = IntentBuilder("ArmsDownIntent")\
+           .require("ArmsDownKeyword").build()
+        self.register_intent(arms_down_intent,
+                            self.handle_arms_down_intent)
+
     # The "handle_xxxx_intent" functions define Mycroft's behavior when
     # each of the skill's intents is triggered: in this case, he simply
     # speaks a response. Note that the "speak_dialog" method doesn't
@@ -83,40 +120,89 @@ class HTTPSkill(MycroftSkill):
     # the method is called.
 
     def handle_game_intent(self):
-        self.speak_dialog("game")
-	r = requests.post(url, data = {'key':'game'})
+	r = requests.post(url, data = {'operation':'game'})
 	if(r.status_code==200):
 		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("game")
 	else:
 		LOGGER.debug("Information wasn't sent properly")
 
     def handle_skype_intent(self):
-        self.speak_dialog("skype")
-	r = requests.post(url, data = {'key':'skype'})
+	r = requests.post(url, data = {'operation':'skype'})
 	if(r.status_code==200):
 		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("skype")
 	else:
 		LOGGER.debug("Information wasn't sent properly")
 
     def handle_guide_intent(self):
 
 	location = self.get_response("guide.question")
-        self.speak_dialog("guide")
-	r = requests.post(url, data = {'key': location})
+	r = requests.post(url, data = {'operation': 'guide', 'destination':location})
 	if(r.status_code==200):
 		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("guide")
 	else:
 		LOGGER.debug("Information wasn't sent properly")
 
     def handle_nurse_intent(self):
-        self.speak_dialog("nurse")
-	r = requests.post(url, data = {'key':'nurse'})
+
+	r = requests.post(url, data = {'operation':'nurse'})
 	if(r.status_code==200):
 		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("nurse")
 	else:
 		LOGGER.debug("Information wasn't sent properly")
 	
+    def handle_smile_intent(self):
+	r = requests.post(url, data = {'operation':'smile'})
+	if(r.status_code==200):
+		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("smile")
+	else:
+		LOGGER.debug("Information wasn't sent properly")
 
+    def handle_right_intent(self):
+	r = requests.post(url, data = {'operation':'right'})
+	if(r.status_code==200):
+		LOGGER.debug("Information was sent properly")
+		self.speak_dialog("right")
+	else:
+		LOGGER.debug("Information wasn't sent properly")
+
+    def handle_left_intent(self):
+	r = requests.post(url, data = {'operation':'left'})
+	if(r.status_code==200):
+		LOGGER.debug("Information was sent properly")
+		self.speak_dialog("left")
+	else:
+		LOGGER.debug("Information wasn't sent properly")
+
+    def handle_high_five_intent(self):
+	r = requests.post(url, data = {'operation':'high five'})
+	if(r.status_code==200):
+		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("high.five")
+	else:
+		LOGGER.debug("Information wasn't sent properly")
+
+    def handle_arms_up_intent(self):
+	r = requests.post(url, data = {'operation':'arms up'})
+	if(r.status_code==200):
+		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("arms.up")
+	else:
+		LOGGER.debug("Information wasn't sent properly")
+
+    def handle_arms_down_intent(self):
+	r = requests.post(url, data = {'operation':'arms down'})
+	if(r.status_code==200):
+		LOGGER.debug("Information was sent properly")
+	        self.speak_dialog("arms.down")
+	else:
+		LOGGER.debug("Information wasn't sent properly")
+
+    
     # The "stop" method defines what Mycroft does when told to stop during
     # the skill's execution. In this case, since the skill's functionality
     # is extremely simple, the method just contains the keyword "pass", which
